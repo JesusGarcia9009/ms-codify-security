@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: ms-common-secret, ms-common
+  profiles:
+    active: Developer
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+server:
+   port: 9000
+   compression:
+      enabled: true
+   servlet.session:
+      # Session timeout after 1 minute
+      timeout: 120

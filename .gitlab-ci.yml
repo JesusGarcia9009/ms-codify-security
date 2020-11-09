@@ -1,0 +1,67 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  #DOCKER_HOSTS: tcp://localhost:2375
+  DOCKER_HOSTS: tcp://127.0.0.1:23750
+  REGISTRY_URL: $REGISTRY_BS2_URL
+  PROJECT_NAME: $CI_PROJECT_NAME
+  NAMESPACE: cross
+  CI_REGISTRY: registry.gitlab.com
+  CI_REGISTRY_USER: preyesc
+  IMAGE_CODE: "maven:latest"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+ 
+cache:
+  paths:
+    - .m2/repository/
+
+ 
+stages:
+- compile code stage
+- docker stage
+- Deploy K8s
+
+compile_code_stage:
+  image: maven
+  only:
+    - develop
+  stage: compile code stage
+  script:
+  - mvn $MAVEN_CLI_OPTS install -DskipTests
+  - export BUILD_DATE=$(date '+%Y%m%d%H%M')
+  - ls target/
+  artifacts:
+    paths:
+      - target/*.jar
+  
+docker_stage:
+  image: docker:dind
+  services:
+    - docker:19.03.0-dind
+  only:
+    - develop
+  stage: docker stage
+  dependencies:
+    - compile_code_stage
+  before_script:
+  - export BUILD_DATE=$(date '+%Y%m%d%H%M')
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+  - ls target/
+  - docker build -t $REGISTRY_URL/$PROJECT_NAME .
+  - docker push $REGISTRY_URL/$PROJECT_NAME
+  after_script:
+  - rm -rf target/
+  - rm -rf .m2/repository/
+
+k8s_container_deploy:
+  only:
+    - develop
+  stage: Deploy K8s
+  image: dtzar/helm-kubectl
+  script:
+    - kubectl --kubeconfig=$K8SADMIN delete deployment $PROJECT_NAME-deployment -n $NAMESPACE
+    - kubectl --kubeconfig=$K8SADMIN apply -f k8s
+    - kubectl --kubeconfig=$K8SADMIN get all -n $NAMESPACE
+
