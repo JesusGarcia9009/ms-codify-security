@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.session</groupId>
-	<artifactId>ms-session</artifactId>
+	<artifactId>ms-codify-security</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>ms-session</name>
-	<description>Proyecto de MicroServicio para la gestión de las autentificacion.</description>
+	<name>ms-codify-security</name>
+	<description>Proyecto de MicroServicio para la gestión de las autentificacion para el proyecto Codify.</description>
 
 	<properties>
 		<java.version>11</java.version>
