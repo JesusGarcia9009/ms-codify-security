@@ -1,14 +1,14 @@
-# pdr-ms-common
+# ms-codify-security
 
-Microservicio orientado al perfilamiento de manera global en la aplicacion
+Microservicio orientado al perfilamiento de manera global en la aplicacion, asi como la gestion del Tenant como variable global
 
 ## Comenzando 🚀
 
 Descargar Fuentes de git
 
 ```
-git clone http://srv-gitlab.pdr.local/grupo-sistema-cobranzas/back-end/pdr-ms-cobranza-vista360.git
-git checkout develop
+git clone https://github.com/JesusGarcia9009/ms-codify-security.git
+git checkout main
 ```
 Una vez descargada las fuentes de debe ejecutar en consola:
 
@@ -24,15 +24,16 @@ En el cual se debe fijar la ruta de acceso al Config Server y el usuario de git 
 ## Agrupación
 La estructura del proyecto es la siguiente
 
-- com.pdr.session
-- com.pdr.session.config
-- com.pdr.session.controller
-- com.pdr.session.controller.impl
-- com.pdr.session.dto
-- com.pdr.session.repository
-- com.pdr.session.service
-- com.pdr.session.service.impl
-- com.pdr.session.utils
+- com.ms.codify
+- com.ms.codify.config
+- com.ms.codify.controller
+- com.ms.codify.dto
+- com.ms.codify.entities
+- com.ms.codify.enums
+- com.ms.codify.exception
+- com.ms.codify.repository
+- com.ms.codify.service
+- com.ms.codify.utils
 
 ## Pre-requisitos 🛠
 
@@ -43,59 +44,6 @@ La estructura del proyecto es la siguiente
 - IDE
 - Lombok
 
-
-### Instalación 🔧
-
-1.- Configuracion de maven apuntando a nuestro nexus local mas las configuraciones de sonar.
-
-```
-C:\Users\{user}\.m2\settings.xml
-<settings>
-
- <mirrors>
-    <mirror>
-      <id>nexus</id>
-      <name>maven-central</name>
-      <url>http://132.130.152.12/repository/pdr-maven/</url>
-      <mirrorOf>*</mirrorOf>
-    </mirror>
-  </mirrors>
-
-  <servers>
-    <server>
-      <id>nexus</id>
-      <username>admin</username>
-      <password>xxxxxxxxx</password>
-    </server>
-  </servers>
-
-<pluginGroups>
-    <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
-  </pluginGroups>
-  <profiles>
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.host.url>http://132.130.152.10</sonar.host.url>
-        <sonar.login>10929f15034cd153365a8970d7b577e1687d012a</sonar.login>
-      <!--  <sonar.projectName>Cobranza</sonar.projectName>-->
-      <!--  <sonar.projectVersion>master</sonar.projectVersion>-->
-      <!--<sonar.test.exclusions>**/test/**/*.*</sonar.test.exclusions>-->
-      <!--<sonar.exclusions>**/config/**/*.*,**/dto/**/*.*,**/model/**/*.*,**/utils/**/*.*</sonar.exclusions>-->
-      </properties>
-    </profile>
-  </profiles>
-</settings>
-```
-
-1.- Una vez cambiadas las rutas se debe volver a correr el mvn install.
-
-```
-mvn clean install
-```
 
 ## Ejecutando las pruebas ⚙
 
@@ -113,8 +61,8 @@ mvn test sonar:sonar
 
 ```
 $mvn clean install
-$docker build -t registry.gitlab.com/bs2managers/{component}:{release}_{enviroment} .
-$docker push registry.gitlab.com/bs2managers/{component}:{release}_{enviroment}
+$docker build -t registry.gitlab.com/{component}:{release}_{enviroment} .
+$docker push registry.gitlab.com/{component}:{release}_{enviroment}
 $kubectl apply -f k8s
 ```
 
@@ -136,13 +84,7 @@ Herramientas y lenguajes utilizados
 
 * **Jesús García** - *Trabajo Inicial-Programación-Dcumentación* 
 
-* **Nelson Alvarado** - *Trabajo Inicial-Programación-Dcumentación* 
-
-* **Fabian Rojas** - *Trabajo Inicial-Programación-Dcumentación* 
-
-* **Sevastian Valenzuela** - *Trabajo Inicial-Programación-Dcumentación* 
-
-* **Patricio Martinez** - *Trabajo Inicial-Programación-Dcumentación* 
+* **Hector Humeres** - *Trabajo Inicial-Programación-Dcumentación* 
 
 
 ## Agradecimientos
