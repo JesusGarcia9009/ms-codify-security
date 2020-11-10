@@ -3,6 +3,7 @@ package com.ms.codify.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -69,17 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		        .and()
 				.authorizeRequests()
-				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
-						"/**/*.css", "/**/*.js")
-				.permitAll()
-				.antMatchers("/v2/api-docs", 
-						"/configuration/ui", 
-						"/swagger-resources/**", 
-						"/api/pdr/v01/common/login/**",
-						"/configuration/security", 
-						"/swagger-ui.html",
-						"/webjars/**")
-				.permitAll().anyRequest().authenticated();
+				.antMatchers(HttpMethod.POST, "/api/codify/login/auth").permitAll()
+				.antMatchers("/configuration/security", "/webjars/**").permitAll().anyRequest().authenticated();
 		
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

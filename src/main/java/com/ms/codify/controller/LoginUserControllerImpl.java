@@ -20,7 +20,7 @@ import com.ms.codify.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("${api.codify.base.uri}/login")
 @Slf4j
 public class LoginUserControllerImpl implements LoginUserController {
 

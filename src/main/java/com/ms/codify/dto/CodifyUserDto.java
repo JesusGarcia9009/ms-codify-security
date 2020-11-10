@@ -40,6 +40,8 @@ public class CodifyUserDto implements UserDetails {
 	
 	private String rut;
 	
+	private String password;
+	
 	private BigDecimal idTenant;
 	
 	private List<ProfileDto> listProfiles;
@@ -65,11 +67,6 @@ public class CodifyUserDto implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-
-	@Override
-	public String getPassword() {
-		return null;
 	}
 
 }

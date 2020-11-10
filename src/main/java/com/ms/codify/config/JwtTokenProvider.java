@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,11 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtTokenProvider {
 
-	//@Value("${api.losparques.secret}")
-	private String jwtSecret ="PR-SOS-SECRET";
+	@Value("${api.codify.secret}")
+	private String jwtSecret ="";
 	
-	//@Value("${api.losparques.secret}")
-	private Integer currentMillis = 6000000;
+	@Value("${api.codify.time}")
+	private Integer currentMillis;
 
 	
 	/**

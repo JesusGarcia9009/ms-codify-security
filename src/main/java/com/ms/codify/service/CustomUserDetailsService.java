@@ -15,7 +15,6 @@ import com.ms.codify.dto.CodifyUserDto;
 import com.ms.codify.dto.ProfileDto;
 import com.ms.codify.entities.PerfilModel;
 import com.ms.codify.entities.UsuarioModel;
-import com.ms.codify.exception.UserNotAuthException;
 import com.ms.codify.repository.PerfilRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,17 +40,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public CodifyUserDto loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 		log.info("[loadUserByUsername]::inicio de metodo");
 		UsuarioModel user = null;
-		try {
-			user = usersService.buscarUserByNameOrRut(usernameOrEmail);
-			return createUserCodify(user);
 
-		} catch (UserNotAuthException e) {
-			log.error("Error en loadUserByUsername", e);
-		} catch (Exception e) {
-			log.error("Error en createUserPrincipal", e);
+		user = usersService.buscarUserByNameOrRut(usernameOrEmail);
+
+		if (user == null) {
+			throw new UsernameNotFoundException("Usuario no encontrado");
 		}
+
 		log.info("[loadUserByUsername]::fin de metodo");
-		return new CodifyUserDto();
+		return createUserCodify(user);
 	}
 
 	/**
@@ -61,14 +58,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * @param usuarioDTO
 	 * @return
 	 */
-	private CodifyUserDto createUserCodify(UsuarioModel userDto) throws Exception {
-		log.info("[createUserPrincipal]::inicio de metodo");
+	private CodifyUserDto createUserCodify(UsuarioModel userDto) {
+		log.info("[createUserCodify]::inicio de metodo");
 		CodifyUserDto codifyUser = new CodifyUserDto();
 
 		codifyUser.setIdUsuario(userDto.getIdUsuario());
 		codifyUser.setFullName(userDto.getNombre() + " " + userDto.getApellidoPaterno());
 		codifyUser.setUsername(userDto.getUsuario());
 		codifyUser.setRut(userDto.getRut());
+		codifyUser.setPassword(userDto.getPass());
 
 		List<ProfileDto> rolList = getRolList(userDto.getUsuario());
 		codifyUser.setListProfiles(rolList);
@@ -79,12 +77,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 			codifyUser.setAuthorities(authorities);
 		}
 
-		log.info("[createUserPrincipal]::fin de metodo");
+		log.info("[createUserCodify]::fin de metodo");
 		return codifyUser;
 	}
 
 	private List<ProfileDto> getRolList(String userName) {
-		log.info("[getRolList]::inicio de metodo");
+		log.info("[createUserCodify:RolList]::inicio de metodo");
 		List<ProfileDto> rolList = new ArrayList<>();
 		// Roles
 		List<PerfilModel> list = profile.findbyUsername(userName);
@@ -94,7 +92,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			r.setDscProfile(rol.getNombre());
 			rolList.add(r);
 		}
-		log.info("[getRolList]::fin de metodo");
+		log.info("[createUserCodify:RolList]::fin de metodo");
 		return rolList;
 	}
 

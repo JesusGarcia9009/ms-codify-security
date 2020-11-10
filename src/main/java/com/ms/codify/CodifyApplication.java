@@ -1,6 +1,5 @@
 package com.ms.codify;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -18,19 +17,18 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @SpringBootApplication
-public class MsSessionApplication {
+public class CodifyApplication {
 	
-	@Value("${api.config.base.uri}")
-	private String urlServicio = "";
+//	private String urlServicio = "/api/pdr/v01/common";
 
 	public static void main(String[] args) {
-		SpringApplication.run(MsSessionApplication.class, args);
+		SpringApplication.run(CodifyApplication.class, args);
 	}
 	
-	@Bean
-	public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerFactoryCustomizer() {
-		log.info("[webServerFactoryCustomizer] :: "+ urlServicio);
-		return factory -> factory.setContextPath(this.urlServicio);
-	}
+//	@Bean
+//	public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerFactoryCustomizer() {
+//		log.info("[webServerFactoryCustomizer] :: "+ urlServicio);
+//		return factory -> factory.setContextPath(this.urlServicio);
+//	}
 
 }
