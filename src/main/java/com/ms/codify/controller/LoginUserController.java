@@ -24,13 +24,6 @@ public interface LoginUserController {
 
 
 	/**
-	 * Metodo encargado de llamar la autentificacion de parque y asignar los roles al token creado.
-	 * 
-	 * @param dto UserAuthRequestDTO.class 
-	 * @return
-	 */
-	
-	/**
 	 * autenticacionUsuario - Metodo encargado crear token con los datos de usuarios ademas de roles, permisos y tenant. - Spring Boot
 	 *
 	 * @author Jesus Garcia
