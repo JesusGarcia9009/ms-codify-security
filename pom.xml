@@ -3,18 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.ms.codify</groupId>
+	<artifactId>ms-codify-security</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>ms-codify-security</name>
+	<description>Proyecto de MicroServicio para la gestión de las autentificacion para el proyecto Codify.</description>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.session</groupId>
-	<artifactId>ms-codify-security</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>ms-codify-security</name>
-	<description>Proyecto de MicroServicio para la gestión de las autentificacion para el proyecto Codify.</description>
 
 	<properties>
 		<java.version>11</java.version>
